@@ -1,0 +1,6 @@
+[submodule "BlogFrontEnd"]
+	path = BlogFrontEnd
+	url = https://github.com/buddha231/BlogFrontEnd/
+[submodule "BlogApi"]
+	path = BlogApi
+	url = https://github.com/buddha231/BlogApi
