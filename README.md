@@ -20,3 +20,7 @@ docker run --rm -d -p 8002:8000 -t blog-app
 * The media file is hosted on **Cloudinary Storage**
 * **ElephantSQLs**  free postgres instance is used for database
 * The API's are created using **Django-Rest-Framework**
+* The django project is deployed in pythonanywhere. 
+* You can access the frontend part of the project via
+  [frontend](https://github.com/buddha231/BlogFrontEnd)
+
