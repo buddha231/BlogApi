@@ -14,6 +14,10 @@ from pathlib import Path
 import os
 
 from datetime import timedelta
+import urllib.parse as up
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,7 +32,7 @@ SECRET_KEY = "django-insecure-!2k%)!m^rm*$ry#g23l*h8-(uwkqoec(%2y#^mh=(!8vteanzp
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -39,7 +43,9 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    "cloudinary_storage",
     "django.contrib.staticfiles",
+    "cloudinary",
     "rest_framework",
     "rest_framework_simplejwt",
     "blog_api",
@@ -58,10 +64,12 @@ MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",  # cors
 ]
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",  # Replace with your frontend's URL
-    # Add more allowed origins as needed
-]
+# CORS_ALLOWED_ORIGINS = [
+#     # "http://localhost:3000",  # Replace with your frontend's URL
+#     "*"
+#     # Add more allowed origins as needed
+# ]
+CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = "blog.urls"
 
@@ -126,11 +134,25 @@ WSGI_APPLICATION = "blog.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
+
+# I don't know what this is but seems to be required
+up.uses_netloc.append("postgres")
+url = up.urlparse(os.environ["DB_URL"])
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
+    'default': {
+       'ENGINE': 'django.db.backends.postgresql',
+       'NAME': os.environ.get('DB_USER'),
+       'USER': os.environ.get('DB_USER'),
+       'PASSWORD': os.environ.get('DB_PASSWORD'),
+       'HOST': url.hostname,
+       'PORT': url.port,
+   }
 }
 
 
@@ -171,7 +193,14 @@ USE_TZ = True
 STATIC_URL = "static/"
 
 # Media files
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ['CLOUD_NAME'],
+    'API_KEY': os.environ['CLOUD_API_KEY'],
+    'API_SECRET': os.environ['CLOUD_API_SECRET']
+}
+# MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = "/media/"
 
 # Default primary key field type
