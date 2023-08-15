@@ -34,6 +34,14 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ['CLOUD_NAME'],
+    'API_KEY': os.environ['CLOUD_API_KEY'],
+    'API_SECRET': os.environ['CLOUD_API_SECRET'],
+    'API_PROXY': 'https://proxy.server:3128',
+}
+#
+DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
 # Application definition
 
@@ -193,14 +201,6 @@ USE_TZ = True
 STATIC_URL = "static/"
 
 # Media files
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.environ['CLOUD_NAME'],
-    'API_KEY': os.environ['CLOUD_API_KEY'],
-    'API_SECRET': os.environ['CLOUD_API_SECRET'],
-    'API_PROXY': 'https://proxy.server:3128',
-}
-#
-DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = "/media/"
