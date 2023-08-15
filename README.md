@@ -16,6 +16,7 @@ docker run --rm -d -p 8002:8000 -t blog-app
 * -t gives tag-name toe the image
 * Now the api's can be accessed via http://0.0.0.0:8002/api/
 
+<<<<<<< HEAD
 ## Tests
 ``` bash
 pytest 
@@ -30,3 +31,9 @@ pytest
 * You can access the frontend part of the project via
   [frontend](https://github.com/buddha231/BlogFrontEnd)
 
+=======
+## Stacks Used
+* The media file is hosted on **Cloudinary Storage**
+* **ElephantSQLs**  free postgres instance is used for database
+* The API's are created using **Django-Rest-Framework**
+>>>>>>> 1762882 (fix: changind database back to sqlite)
