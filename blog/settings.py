@@ -198,7 +198,8 @@ DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': os.environ['CLOUD_NAME'],
     'API_KEY': os.environ['CLOUD_API_KEY'],
-    'API_SECRET': os.environ['CLOUD_API_SECRET']
+    'API_SECRET': os.environ['CLOUD_API_SECRET'],
+    'API_PROXY': 'http://proxy.server:3128',
 }
 # MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = "/media/"
