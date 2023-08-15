@@ -200,7 +200,7 @@ CLOUDINARY_STORAGE = {
     'API_PROXY': 'https://proxy.server:3128',
 }
 #
-# DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = "/media/"
