@@ -21,9 +21,6 @@ class UserTests(APITestCase):
         self.assertEqual(User.objects.get().username, 'testuser')
         self.assertEqual(User.objects.get().email, 'test@use.com')
 
-    def test_create_user_without_email(self):
-        pass
-
     def test_create_user_without_username(self):
         """
         Ensure we can create a new user object.

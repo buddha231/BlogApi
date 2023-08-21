@@ -23,8 +23,6 @@ class BlogView(generics.RetrieveUpdateDestroyAPIView):
         instance.delete()
 
     def perform_update(self, serializer):
-
-        print(serializer.instance.author)
         if serializer.instance.author != self.request.user:
             raise PermissionDenied("You can only update your own blog")
         serializer.save()
