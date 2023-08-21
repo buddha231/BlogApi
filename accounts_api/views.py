@@ -1,15 +1,17 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework import generics
 from rest_framework import status
 from rest_framework.permissions import AllowAny
 
 from accounts_api.serializers import UserSerializer
 
 
-class UserRecordView(APIView):
+class UserRecordView(generics.GenericAPIView):
     """API View to create or get user info.
     a POST request allows to create a new user.
     """
+    serializer_class = UserSerializer
 
     def get(self, format=None):
         """make get request with token present in the authentication header

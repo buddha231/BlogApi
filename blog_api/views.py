@@ -18,16 +18,16 @@ class BlogView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Blog.objects.all()
 
     def perform_destroy(self, instance):
-
         if instance.author != self.request.user:
             raise PermissionDenied("You can only delete your own blog")
         instance.delete()
 
-    def perform_update(self, instance):
-        test_instance = self.get_serializer(instance)
-        if test_instance.author != self.request.user:
+    def perform_update(self, serializer):
+
+        print(serializer.instance.author)
+        if serializer.instance.author != self.request.user:
             raise PermissionDenied("You can only update your own blog")
-        instance.save()
+        serializer.save()
 
 
 class BlogCreateView(generics.ListCreateAPIView):
@@ -48,7 +48,9 @@ class BlogSelfView(generics.ListAPIView):
         return user.blogs.all()
 
 
-class BlogLikeView(APIView):
+class BlogLikeView(generics.GenericAPIView):
+    serializer_class = BlogSerializer
+
     def get(self, request, pk):
         blog = Blog.objects.get(id=pk)
         user = request.user

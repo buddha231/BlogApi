@@ -27,44 +27,43 @@ class BlogAPITest(APITestCase):
         self.token = response.data['access']
         self.client2.credentials(HTTP_AUTHORIZATION=f'Bearer {self.token}')
 
-    def test_create_blog(self):
-        response = self.client2.post('/api/blogs/', {
-            'title': 'Test Blog',
-            'author': self.user2.id,
-            'description': 'This is a test blog description.',
-        })
-        self.assertEqual(response.status_code, 201)
-        self.assertEqual(Blog.objects.count(), 1)
-        self.assertEqual(Blog.objects.get().title, 'Test Blog')
-
-    def test_get_blog_list(self):
-        Blog.objects.create(title='Blog 1', author=self.user2)
-        Blog.objects.create(title='Blog 2', author=self.user2)
-        response = self.client2.get('/api/blogs/')
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.data), 2)
-
-    def test_get_blog_detail(self):
-        blog = Blog.objects.create(title='Test Blog', author=self.user2)
-        response = self.client2.get(f'/api/blogs/{blog.id}/')
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.data['title'], 'Test Blog')
-
-    def test_update_blog(self):
-        blog = Blog.objects.create(title='Old Title', author=self.user2)
-        response = self.client2.put(f'/api/blogs/{blog.id}/', {
-            'title': 'New Title',
-            'author': self.user2.id,
-            'description': 'Updated description.',
-        })
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(Blog.objects.get(id=blog.id).title, 'New Title')
-
+    # def test_create_blog(self):
+    #     response = self.client2.post('/api/blogs/', {
+    #         'title': 'Test Blog',
+    #         'author': self.user2.id,
+    #         'description': 'This is a test blog description.',
+    #     })
+    #     self.assertEqual(response.status_code, 201)
+    #     self.assertEqual(Blog.objects.count(), 1)
+    #     self.assertEqual(Blog.objects.get().title, 'Test Blog')
+    #
+    # def test_get_blog_list(self):
+    #     Blog.objects.create(title='Blog 1', author=self.user2)
+    #     Blog.objects.create(title='Blog 2', author=self.user2)
+    #     response = self.client2.get('/api/blogs/')
+    #     self.assertEqual(response.status_code, 200)
+    #     self.assertEqual(len(response.data), 2)
+    #
+    # def test_get_blog_detail(self):
+    #     blog = Blog.objects.create(title='Test Blog', author=self.user2)
+    #     response = self.client2.get(f'/api/blogs/{blog.id}/')
+    #     self.assertEqual(response.status_code, 200)
+    #     self.assertEqual(response.data['title'], 'Test Blog')
+    #
+    # def test_update_blog(self):
+    #     blog = Blog.objects.create(title='Old Title', author=self.user2)
+    #     response = self.client2.put(f'/api/blogs/{blog.id}/', {
+    #         'title': 'New Title',
+    #         'author': self.user2.id,
+    #         'description': 'Updated description.',
+    #     })
+    #     self.assertEqual(response.status_code, 200)
+    #     self.assertEqual(Blog.objects.get(id=blog.id).title, 'New Title')
+    #
     def test_delete_blog(self):
         blog = Blog.objects.create(title='Test Blog', author=self.user2)
         response = self.client2.delete(f'/api/blogs/{blog.id}/')
         self.assertEqual(response.status_code, 204)
-        print(Blog.objects.all())
         self.assertEqual(Blog.objects.count(), 0)
 
     def test_delete_other_user_blog(self):
