@@ -16,6 +16,11 @@ docker run --rm -d -p 8002:8000 -t blog-app
 * -t gives tag-name toe the image
 * Now the api's can be accessed via http://0.0.0.0:8002/api/
 
+## Tests
+``` bash
+pytest 
+```
+
 ## Stacks Used
 * The authentication is handled using JWT
 * The media file is hosted on **Cloudinary Storage**
