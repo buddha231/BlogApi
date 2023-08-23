@@ -80,3 +80,13 @@ class BlogAPITest(APITestCase):
         })
         self.assertEqual(response.status_code, 403)
         self.assertEqual(Blog.objects.count(), 1)
+
+    def test_post_unauthenticated_user(self):
+        client = APIClient()
+        response = client.post('/api/blogs/', {
+            'title': 'Test Blog',
+            'author': self.user1.id,
+            'description': 'This is a test blog description.',
+        })
+        self.assertEqual(response.status_code, 401)
+        self.assertEqual(Blog.objects.count(), 0)
