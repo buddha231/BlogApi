@@ -9,7 +9,7 @@ class BlogSerializer(serializers.ModelSerializer):
     """Serializer for Blog model"""
 
     permission_classes = [AllowAny]
-    # author = UserSerializer(read_only=True)
+    author = UserSerializer(read_only=True)
     # like_users = UserSerializer(read_only=True, many=True)
 
     class Meta:

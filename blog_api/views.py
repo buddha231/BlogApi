@@ -1,15 +1,11 @@
-from rest_framework import generics
-from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
-
-from .serializers import BlogSerializer
-from .models import Blog
-
-from rest_framework import status
-from rest_framework.response import Response
-
-from rest_framework.views import APIView
-
 from rest_framework.exceptions import PermissionDenied
+from rest_framework.response import Response
+from rest_framework import status
+from .models import Blog
+from .serializers import BlogSerializer
+from rest_framework import generics
+from rest_framework.permissions import (IsAuthenticatedOrReadOnly,
+                                        IsAuthenticated)
 
 
 class BlogView(generics.RetrieveUpdateDestroyAPIView):
