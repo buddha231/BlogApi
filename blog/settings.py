@@ -16,9 +16,9 @@ import os
 from datetime import timedelta
 import urllib.parse as up
 
-# from dotenv import load_dotenv
+from dotenv import load_dotenv
 
-# load_dotenv()
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "debug_toolbar",
     "drf_spectacular",
+    "django_extensions"
 ]
 
 MIDDLEWARE = [
@@ -145,12 +146,12 @@ WSGI_APPLICATION = "blog.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
 
 # I don't know what this is but seems to be required
 # up.uses_netloc.append("postgres")
@@ -165,7 +166,18 @@ DATABASES = {
 #        'PORT': url.port,
 #    }
 # }
-#
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('DB_USER'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
+        'HOST': "db",
+        'PORT': 5432,
+    }
+}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

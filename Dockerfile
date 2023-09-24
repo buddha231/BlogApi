@@ -8,14 +8,16 @@ ENV DJANGO_SETTINGS_MODULE=blog.settings
 # Set the working directory in the container
 WORKDIR /app
 
-# Copy the current directory contents into the container at /app
-COPY . /app/
-
-# Install any needed packages specified in requirements.txt
+COPY requirements.txt /app/requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Expose the port the app runs on
+COPY entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
+
+# Copy the current directory contents into the container at /app
+
+COPY . /app
+
 EXPOSE 8000
 
-# Run the command to start the Django development server
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["gunicorn", "blog.wsgi:application", "--bind", "0.0.0.0:8000"]
